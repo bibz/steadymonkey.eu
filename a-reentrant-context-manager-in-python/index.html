@@ -2,17 +2,34 @@
 <html>
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>A reentrant context manager in Python</title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>A reentrant context manager in Python</title>
+	<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=daab612fce">
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css?v=2e28d800aa">
 
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <link rel="canonical" href="index.html">
+	<script>
+			var siteUrl = 'steadymonkey.eu/blog';
+	</script>
+
+	<script>
+			var localTheme = localStorage.getItem('attila_theme');
+			switch (localTheme) {
+					case 'dark':
+							document.documentElement.classList.add('theme-dark');
+							break;
+					case 'light':
+							document.documentElement.classList.add('theme-light');
+							break;
+					default:
+							break;
+			}
+	</script>
+
+	<link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <link rel="amphtml" href="amp/index.html">
     
@@ -41,7 +58,11 @@
     "publisher": {
         "@type": "Organization",
         "name": "Steady Monkey",
-        "logo": "steadymonkey.eu/blog/favicon.ico"
+        "url": "steadymonkey.eu/blog/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "steadymonkey.eu/blog/favicon.ico"
+        }
     },
     "author": {
         "@type": "Person",
@@ -61,59 +82,79 @@
     }
 }
     </script>
-
-    <meta name="generator" content="Ghost 2.37">
+<style>:root {--ghost-accent-color: #b6a800;}</style>
+    <meta name="generator" content="Ghost 4.19">
     <link rel="alternate" type="application/rss+xml" title="Steady Monkey" href="../rss/index.html">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.min.css" rel="stylesheet">
-
 </head>
+
 <body class="post-template tag-python">
 
-    <div class="site-wrapper">
-
-        
-
-<header class="site-header outer">
-    <div class="inner">
-        <nav class="site-nav">
-    <div class="site-nav-left">
-                <a class="site-nav-logo" href="../index.html">Steady Monkey</a>
-            <ul class="nav" role="menu">
-    <li class="nav-home" role="menuitem"><a href="../index.html">Home</a></li>
-    <li class="nav-python" role="menuitem"><a href="../tag/python/index.html">Python</a></li>
-    <li class="nav-random-bits" role="menuitem"><a href="../tag/thoughts/index.html">Random bits</a></li>
-    <li class="nav-services" role="menuitem"><a href="../services/index.html">Services</a></li>
+	<div class="nav-header">
+		<nav class="nav-wrapper" aria-label="Main">
+				<ul>
+		<li class="nav-home"><a href="../index.html"><span>Home</span></a></li>
+		<li class="nav-homelab"><a href="../tag/homelab/index.html"><span>Homelab</span></a></li>
+		<li class="nav-python"><a href="../tag/python/index.html"><span>Python</span></a></li>
+		<li class="nav-random-bits"><a href="../tag/thoughts/index.html"><span>Random bits</span></a></li>
+		<li class="nav-services"><a href="../services/index.html"><span>Services</span></a></li>
 </ul>
 
-    </div>
-    <div class="site-nav-right">
-        <div class="social-links">
-        </div>
-            <a class="rss-button" href="https://feedly.com/i/subscription/feed/steadymonkey.eu/blog/rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
-</a>
-    </div>
-</nav>
-    </div>
+				<ul class="nav-meta">
+  <li class="nav-search" style="display: none;">
+    <a title="Search">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span>Search</span>
+    </a>
+  </li>
+  <!--
+    <li class="nav-subscribe">
+      <a href="#/portal">Subscribe</a>
+    </li>
+  -->
+</ul>
+		</nav>
+
+		<div class="nav-wrapper-control">
+			<div class="inner">
+				<a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
+				<a class="nav-search" style="display: none;" title="Search" role="button"><i class="icon icon-search" aria-hidden="true"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="nav-close" role="button" aria-label="Close"></div>
+
+	<section class="page-wrapper">
+
+		
+
+<div class="progress-container">
+	<span class="progress-bar"></span>
+</div>
+
+<header class="post-header ">
+	<div class="inner">
+		<span class="post-info">
+			<span class="post-type">Article</span>
+			<span class="post-count">Python</span>
+		</span>
+		<h1 class="post-title">A reentrant context manager in Python</h1>
+		<div class="post-meta">
+			<div class="post-meta-avatars">
+					<figure class="post-meta-avatar avatar">
+					</figure>
+			</div>
+			<h4 class="post-meta-author"><a href="../author/borjan/index.html">Borjan Tchakaloff</a></h4>
+			<time datetime="05-01-2020">05 Jan 2020</time> • 7 min read
+		</div>
+	</div>
 </header>
 
+<main class="content" role="main">
+	<article class="post tag-python no-image">
+		<div class="inner">
 
-<main id="site-main" class="site-main outer">
-    <div class="inner">
-
-        <article class="post-full post tag-python no-image">
-
-            <header class="post-full-header">
-                <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="2020-01-05">5 January 2020</time>
-                        <span class="date-divider">/</span> <a href="../tag/python/index.html">Python</a>
-                </section>
-                <h1 class="post-full-title">A reentrant context manager in Python</h1>
-            </header>
-
-
-            <section class="post-full-content">
-                <div class="post-content">
-                    <p>A Python context manager caters for the boilerplate wrapping a resource to offer safety and convenient (re-)use. This protocol ensures that once the context is initialised, it will be torn down whatever happens. Examples of resource handling are input/output operations, session management, thread locking, etc. In this article, we will take a focus peek at one "<a href="https://www.python.org/dev/peps/pep-0020/#the-zen-of-python">honking great idea</a>": a <strong>reentrant context manager</strong>.</p><p>There has been <a href="http://johnj.com/intro-to-context-managers-in-python.html">many</a> <a href="https://book.pythontips.com/en/latest/context_managers.html">articles</a> and pages of <a href="https://en.wikibooks.org/wiki/Python_Programming/Context_Managers">documentation</a> to explain why context managers are a good thing, and why you would want to <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">always<em> </em>handle your resources</a> with them.</p><p>Drawing from classic computer science principles, we propose here to extend the <em>context manager</em> with the <em>reentrant</em> principle to achieve a simple, yet powerful, resource management.</p><h2 id="our-case-study-a-data-store">Our case study: a data store</h2><p>Suppose you are writing a library for a (remote) service. It could be that you want to offer a nice Python interface for your own service, or simply that you want to abstract the service itself from your business code — a <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">sound idea</a>.</p><p>Our example service is a data store. A user can push, and then pull, arbitrary data from it. Any data that is stored there is associated to a unique identifier. Later, and at one's request, the identifier can be used to pull the data out of the store once and for all. The store will forget about that piece of data.</p><!--kg-card-begin: code--><pre><code class="language-python"># datastore.py
+			<section class="post-content">
+				<p>A Python context manager caters for the boilerplate wrapping a resource to offer safety and convenient (re-)use. This protocol ensures that once the context is initialised, it will be torn down whatever happens. Examples of resource handling are input/output operations, session management, thread locking, etc. In this article, we will take a focus peek at one "<a href="https://www.python.org/dev/peps/pep-0020/#the-zen-of-python">honking great idea</a>": a <strong>reentrant context manager</strong>.</p><p>There has been <a href="http://johnj.com/intro-to-context-managers-in-python.html">many</a> <a href="https://book.pythontips.com/en/latest/context_managers.html">articles</a> and pages of <a href="https://en.wikibooks.org/wiki/Python_Programming/Context_Managers">documentation</a> to explain why context managers are a good thing, and why you would want to <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">always<em> </em>handle your resources</a> with them.</p><p>Drawing from classic computer science principles, we propose here to extend the <em>context manager</em> with the <em>reentrant</em> principle to achieve a simple, yet powerful, resource management.</p><h2 id="our-case-study-a-data-store">Our case study: a data store</h2><p>Suppose you are writing a library for a (remote) service. It could be that you want to offer a nice Python interface for your own service, or simply that you want to abstract the service itself from your business code — a <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">sound idea</a>.</p><p>Our example service is a data store. A user can push, and then pull, arbitrary data from it. Any data that is stored there is associated to a unique identifier. Later, and at one's request, the identifier can be used to pull the data out of the store once and for all. The store will forget about that piece of data.</p><pre><code class="language-python"># datastore.py
 from abc import ABC, abstractmethod
 
 
@@ -130,7 +171,7 @@ class Datastore(ABC):
     @abstractmethod
     def pull(self, identifier: Identifier) -&gt; Content:
         ...
-</code></pre><!--kg-card-end: code--><p>The interface is simple and clean. <code>Datastore</code> is an <a href="https://docs.python.org/3/glossary.html#term-abstract-base-class">abstract class</a> with two public (abstract) methods.</p><p>Let's create an in-memory datastore to mock the service and trace the interface calls:</p><!--kg-card-begin: code--><pre><code class="language-python"># mock_datastore.py
+</code></pre><p>The interface is simple and clean. <code>Datastore</code> is an <a href="https://docs.python.org/3/glossary.html#term-abstract-base-class">abstract class</a> with two public (abstract) methods.</p><p>Let's create an in-memory datastore to mock the service and trace the interface calls:</p><pre><code class="language-python"># mock_datastore.py
 import logging
 from uuid import uuid4
 
@@ -154,7 +195,7 @@ class InMemoryDatastore(Datastore):
         self._log.debug(f'PULL: %s', identifier)
         content = self._store.pop(identifier)
         return content
-</code></pre><!--kg-card-end: code--><p>We can now store and retrieve content from a datastore:</p><!--kg-card-begin: code--><pre><code class="language-python">&gt;&gt;&gt; import logging
+</code></pre><p>We can now store and retrieve content from a datastore:</p><pre><code class="language-python">&gt;&gt;&gt; import logging
 &gt;&gt;&gt; logging.basicConfig(level=logging.DEBUG)
 &gt;&gt;&gt; from mock_datastore import InMemoryDatastore as MockDatastore
 &gt;&gt;&gt; client = MockDatastore()
@@ -163,7 +204,7 @@ DEBUG:InMemoryDatastore:PUSH: 53d387c9-8d96-4ca8-a1c5-f6d5efffc572 with 8 bytes
 &gt;&gt;&gt; client.pull(i)
 DEBUG:InMemoryDatastore:PULL: 53d387c9-8d96-4ca8-a1c5-f6d5efffc572
 b'an entry'
-</code></pre><!--kg-card-end: code--><h2 id="-for-authenticated-users">… for authenticated users</h2><p>Say there is a new requirement: all actions undertook against the data store must be authenticated. The client interface should handle this and provide a construct to deal with <em>sessions</em>. There is no need for the interface consumer to have to manually log in and out, we will not change the <code>Datastore</code> interface. The library we are writing is supposed to <em>help</em> the consumer, not clutter its interface.</p><p>We will define the authentication methods as "private/protected" and use them to push and pull data to the data store, from the implementation classes themselves. To avoid repeating ourselves, we simply define a new interface:</p><!--kg-card-begin: code--><pre><code class="language-python"># authenticated_datastore.py
+</code></pre><h2 id="-for-authenticated-users">… for authenticated users</h2><p>Say there is a new requirement: all actions undertook against the data store must be authenticated. The client interface should handle this and provide a construct to deal with <em>sessions</em>. There is no need for the interface consumer to have to manually log in and out, we will not change the <code>Datastore</code> interface. The library we are writing is supposed to <em>help</em> the consumer, not clutter its interface.</p><p>We will define the authentication methods as "private/protected" and use them to push and pull data to the data store, from the implementation classes themselves. To avoid repeating ourselves, we simply define a new interface:</p><pre><code class="language-python"># authenticated_datastore.py
 
 from abc import abstractmethod
 from contextlib import contextmanager
@@ -191,7 +232,7 @@ class AuthenticatedDatastore(Datastore):
     @abstractmethod
     def _logout(self, token: AuthToken):
         ...
-</code></pre><!--kg-card-end: code--><p>Good programmers are lazy, they say. Programmers always want to make things silly simple and efficient. I could not agree more, especially if there is an exposed interface at play.</p><p>The implementation classes have to remember to call <code>_logout()</code> every time they call <code>_login()</code>. What happens to us when we burden ourselves with hand-woven resource management? Things break, memory leaks, and we become sad.</p><p>The authentication as we just defined it <strong>is a resource</strong> that we manage: we have to create (<em>to log in</em>) and destroy (<em>to log out</em>) each instance we handle (<em>a session</em>). Let's take a look at a nifty solution Python offers us: the context manager.</p><h2 id="what-a-context-manager-is-by-example">What a context manager is, by example</h2><p>The Python documentation describes <a href="https://docs.python.org/3/reference/datamodel.html#context-managers">a context manager</a> as:</p><blockquote>[…] an object that defines the runtime context to be established when executing a <code>with</code> statement. The context manager handles the entry into, and the exit from, the desired runtime context for the execution of the block of code.</blockquote><p>Said differently, the scope of a context manager is tied to an object life-cycle. But instead of the regular <em>initialisation</em> and <em>destruction</em> of the object, a different protocol is used (aptly named… <a href="https://docs.python.org/3/library/stdtypes.html#typecontextmanager">Context Manager</a>). It defines the interface for <em>entry</em> and <em>exit</em> of the scope.</p><p>We described earlier our resource as <em>an authentication session</em>. Its actions were <em>to log in</em> and <em>to log out</em>. Simply translated to Python into a new mock:</p><!--kg-card-begin: code--><pre><code class="language-python">from authenticated_datastore import AuthToken, AuthenticatedDatastore
+</code></pre><p>Good programmers are lazy, they say. Programmers always want to make things silly simple and efficient. I could not agree more, especially if there is an exposed interface at play.</p><p>The implementation classes have to remember to call <code>_logout()</code> every time they call <code>_login()</code>. What happens to us when we burden ourselves with hand-woven resource management? Things break, memory leaks, and we become sad.</p><p>The authentication as we just defined it <strong>is a resource</strong> that we manage: we have to create (<em>to log in</em>) and destroy (<em>to log out</em>) each instance we handle (<em>a session</em>). Let's take a look at a nifty solution Python offers us: the context manager.</p><h2 id="what-a-context-manager-is-by-example">What a context manager is, by example</h2><p>The Python documentation describes <a href="https://docs.python.org/3/reference/datamodel.html#context-managers">a context manager</a> as:</p><blockquote>[…] an object that defines the runtime context to be established when executing a <code>with</code> statement. The context manager handles the entry into, and the exit from, the desired runtime context for the execution of the block of code.</blockquote><p>Said differently, the scope of a context manager is tied to an object life-cycle. But instead of the regular <em>initialisation</em> and <em>destruction</em> of the object, a different protocol is used (aptly named… <a href="https://docs.python.org/3/library/stdtypes.html#typecontextmanager">Context Manager</a>). It defines the interface for <em>entry</em> and <em>exit</em> of the scope.</p><p>We described earlier our resource as <em>an authentication session</em>. Its actions were <em>to log in</em> and <em>to log out</em>. Simply translated to Python into a new mock:</p><pre><code class="language-python">from authenticated_datastore import AuthToken, AuthenticatedDatastore
 
 
 class InMemoryAuthenticatedDatastore(InMemoryDatastore):
@@ -223,7 +264,7 @@ class InMemoryAuthenticatedDatastore(InMemoryDatastore):
 
     def pull(self, identifier):
         with self._session():
-            return super().push(content)</code></pre><!--kg-card-end: code--><p>The session context manager is built so that once we are successfully logged in — when we enter the scope of the <code>with</code> block — we will always log out <em>no matter what happens</em>. Indeed, thanks to the generator-like approach in our context manager, we <em>yield</em> within the scope of the <code>try</code> block. We exit this block only when the yield returns — that is, when the <code>with</code> scope is exited from the calling block.</p><p>Basically, that means that even if an exception is raised when we are within the scope of the session context manager, the session will be torn down before the exception ripples up:</p><!--kg-card-begin: code--><pre><code class="language-python">&gt;&gt;&gt; import logging
+            return super().push(content)</code></pre><p>The session context manager is built so that once we are successfully logged in — when we enter the scope of the <code>with</code> block — we will always log out <em>no matter what happens</em>. Indeed, thanks to the generator-like approach in our context manager, we <em>yield</em> within the scope of the <code>try</code> block. We exit this block only when the yield returns — that is, when the <code>with</code> scope is exited from the calling block.</p><p>Basically, that means that even if an exception is raised when we are within the scope of the session context manager, the session will be torn down before the exception ripples up:</p><pre><code class="language-python">&gt;&gt;&gt; import logging
 &gt;&gt;&gt; logging.basicConfig(level=logging.DEBUG)
 &gt;&gt;&gt; from mock_datastore import InMemoryAuthenticatedDatastore as MockDatastore
 &gt;&gt;&gt; client = MockDatastore()
@@ -244,7 +285,7 @@ Traceback (most recent call last):
   ...
     raise KeyError(f"Unknown identifier {identifier!r}")
 KeyError: "Unknown identifier 'f0d4dc6b-38fa-485d-b96d-0ced4c10c382'"
-</code></pre><!--kg-card-end: code--><h2 id="performing-many-operations">Performing many operations</h2><p>As we just saw, each operation handles its own session scope. From an interface point of view, this is great, the datastore library is responsible for its own success and the library clients do not have to know about the session details. This also allows us to configure a datastore service (<code>Datastore</code> and its children) at instantiation time and then forget about the service details. Perfect for dependency injection.</p><p>But calling many operations sequentially is far from ideal. Each operation will initiate a new session, perform its action, and then close the session. In our mono-threaded example, we are taking the network hit every single time we request a service operation.</p><p>Conversely, when a consumer wants to perform batch operations, it would be beneficial to open only one session, perform all operations, and only then close the session.</p><p>Let us see what trace we get if we try this with our current session context manager:</p><!--kg-card-begin: code--><pre><code class="language-python">&gt;&gt;&gt; from mock_datastore import InMemoryDatastore as MockDatastore
+</code></pre><h2 id="performing-many-operations">Performing many operations</h2><p>As we just saw, each operation handles its own session scope. From an interface point of view, this is great, the datastore library is responsible for its own success and the library clients do not have to know about the session details. This also allows us to configure a datastore service (<code>Datastore</code> and its children) at instantiation time and then forget about the service details. Perfect for dependency injection.</p><p>But calling many operations sequentially is far from ideal. Each operation will initiate a new session, perform its action, and then close the session. In our mono-threaded example, we are taking the network hit every single time we request a service operation.</p><p>Conversely, when a consumer wants to perform batch operations, it would be beneficial to open only one session, perform all operations, and only then close the session.</p><p>Let us see what trace we get if we try this with our current session context manager:</p><pre><code class="language-python">&gt;&gt;&gt; from mock_datastore import InMemoryDatastore as MockDatastore
 &gt;&gt;&gt; client = MockDatastore()
 &gt;&gt;&gt; with client._session():
 ...     i = client.push('another entry')
@@ -258,7 +299,7 @@ DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
 DEBUG:InMemoryAuthenticatedDatastore:PULL: 3034f5e6-3ee8-42cb-b22e-48901afb1097
 DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768
 'another entry'
-DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768</code></pre><!--kg-card-end: code--><p>The current behaviour is clearly not what we want, we now even have one more session wrapping everything else!</p><p>In a lucky scenario, the remote service behaves nicely and re-use the existing session whenever we try to authenticate ourselves again. But unless this is an explicit service feature, we really should cater for this locally, in the library.</p><h2 id="re-using-the-existing-session-or-the-reentrant-context-manager">Re-using the existing session, or the reentrant context manager</h2><p>The idea driving our use-case is that we keep a session open until it has served its purpose. We can only achieve this by <em>remembering</em> that there is an open session already. And when a request for a session pops up, through a call to the session context manager, we can safely re-use the existing session instead of asking for a new one.</p><p>In computer science, this concept is famously applied to locks. A simple lock can be acquired once. Before any new acquiring, even by the current holder, the simple lock must be released. On the other hand, a reentrant lock can be acquired time and again by its current holder.</p><p>Our dummy in-memory datastore needs an update:</p><!--kg-card-begin: code--><pre><code class="language-python">from typing import Optional
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768</code></pre><p>The current behaviour is clearly not what we want, we now even have one more session wrapping everything else!</p><p>In a lucky scenario, the remote service behaves nicely and re-use the existing session whenever we try to authenticate ourselves again. But unless this is an explicit service feature, we really should cater for this locally, in the library.</p><h2 id="re-using-the-existing-session-or-the-reentrant-context-manager">Re-using the existing session, or the reentrant context manager</h2><p>The idea driving our use-case is that we keep a session open until it has served its purpose. We can only achieve this by <em>remembering</em> that there is an open session already. And when a request for a session pops up, through a call to the session context manager, we can safely re-use the existing session instead of asking for a new one.</p><p>In computer science, this concept is famously applied to locks. A simple lock can be acquired once. Before any new acquiring, even by the current holder, the simple lock must be released. On the other hand, a reentrant lock can be acquired time and again by its current holder.</p><p>Our dummy in-memory datastore needs an update:</p><pre><code class="language-python">from typing import Optional
 
 
 class InMemoryReentrantDatastore(InMemoryAuthenticatedDatastore):
@@ -277,7 +318,7 @@ class InMemoryReentrantDatastore(InMemoryAuthenticatedDatastore):
             yield
         finally:
             self._logout(self._session_token)
-</code></pre><!--kg-card-end: code--><p>If a session token exists, it means that we are already within the scope of the session context manager. Thus we simply yield to allow the caller to complete, and then return from the context manager. The context manager that initiated the session token is the only one allowed to log out.</p><!--kg-card-begin: code--><pre><code class="language-python">&gt;&gt;&gt; from mock_datastore import InMemoryReentrantDatastore as MockDatastore
+</code></pre><p>If a session token exists, it means that we are already within the scope of the session context manager. Thus we simply yield to allow the caller to complete, and then return from the context manager. The context manager that initiated the session token is the only one allowed to log out.</p><pre><code class="language-python">&gt;&gt;&gt; from mock_datastore import InMemoryReentrantDatastore as MockDatastore
 &gt;&gt;&gt; client = MockDatastore()
 &gt;&gt;&gt; with client._session():
 ...     i = client.push('another entry')
@@ -287,216 +328,174 @@ DEBUG:InMemoryReentrantDatastore:LOGIN: -1271783380944662680
 DEBUG:InMemoryReentrantDatastore:PUSH: db578045-674b-463f-9475-156315fcce29 with 13 bytes
 DEBUG:InMemoryReentrantDatastore:PULL: db578045-674b-463f-9475-156315fcce29
 'another entry'
-DEBUG:InMemoryReentrantDatastore:LOGOUT: -1271783380944662680</code></pre><!--kg-card-end: code--><p>The session scope is now respected: there is only one session created for the <code>InMemoryReentrantDatastore._session()</code> context manager scope, no matter how many calls to methods requiring a session.</p><p>We should note that the current interface does not expose the session context manager as public to the library clients. Considering our contrived example, we can simply flatten the whole hierarchy and keep only one interface and one in-memory implementation. This is left as an exercise.</p><h2 id="conclusion">Conclusion</h2><p>Python context managers are an easy way to abstract resource management in libraries. Their simple form flows and is enough as long as they remain independent. Upgrading a context manager to be reentrant is a simple and efficient way to allow a scope to be shared, without changing the context semantics.</p><p><a href="https://www.python.org/dev/peps/pep-0318/">Decorators</a> are another powerful concept in Python. Our example uses the <a href="https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager"><code>contextlib.contextmanager</code> decorator</a> to wrap a function and make it into a context manager.</p><p>Would you like to use the session context manager as a decorator too? Go on, try it! Try both approaches and see which one reads and writes better <em>from the library client.</em></p>
-                </div>
-            </section>
+DEBUG:InMemoryReentrantDatastore:LOGOUT: -1271783380944662680</code></pre><p>The session scope is now respected: there is only one session created for the <code>InMemoryReentrantDatastore._session()</code> context manager scope, no matter how many calls to methods requiring a session.</p><p>We should note that the current interface does not expose the session context manager as public to the library clients. Considering our contrived example, we can simply flatten the whole hierarchy and keep only one interface and one in-memory implementation. This is left as an exercise.</p><h2 id="conclusion">Conclusion</h2><p>Python context managers are an easy way to abstract resource management in libraries. Their simple form flows and is enough as long as they remain independent. Upgrading a context manager to be reentrant is a simple and efficient way to allow a scope to be shared, without changing the context semantics.</p><p><a href="https://www.python.org/dev/peps/pep-0318/">Decorators</a> are another powerful concept in Python. Our example uses the <a href="https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager"><code>contextlib.contextmanager</code> decorator</a> to wrap a function and make it into a context manager.</p><p>Would you like to use the session context manager as a decorator too? Go on, try it! Try both approaches and see which one reads and writes better <em>from the library client.</em></p>
+			</section>
+
+			<section class="post-footer">
+
+				<div class="post-share">
+					<span class="post-info-label">Share</span>
+					<a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=A%20reentrant%20context%20manager%20in%20Python&amp;url=steadymonkey.eu/blog/a-reentrant-context-manager-in-python/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+						<i class="icon icon-twitter" aria-hidden="true"></i>
+					</a>
+					<a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=steadymonkey.eu/blog/a-reentrant-context-manager-in-python/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+						<i class="icon icon-facebook" aria-hidden="true"></i>
+					</a>
+					<a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=steadymonkey.eu/blog/a-reentrant-context-manager-in-python//&amp;title=A%20reentrant%20context%20manager%20in%20Python" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+						<i class="icon icon-linkedin" aria-hidden="true"></i>
+					</a>
+					<a title="Email" aria-label="Email" class="email" href="mailto:?subject=A%20reentrant%20context%20manager%20in%20Python&amp;body=steadymonkey.eu/blog/a-reentrant-context-manager-in-python/">
+						<i class="icon icon-mail" aria-hidden="true"></i>
+					</a>
+				</div>
+
+				<aside class="post-tags">
+					<span class="post-info-label">Topic</span>
+					<a href="../tag/python/index.html">Python</a>
+				</aside>
+
+			</section>
 
 
-            <footer class="post-full-footer">
+			<section class="post-comments">
+				<a id="show-disqus" class="post-comments-activate">Show Comments</a>
+			   <div id="disqus_thread"></div>
+			</section>
 
 
-                    
-<section class="author-card">
-        <span class="avatar-wrapper"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"></path></g></svg>
-</span>
-    <section class="author-card-content">
-        <h4 class="author-card-name"><a href="../author/borjan/index.html">Borjan Tchakaloff</a></h4>
-            <p>Read <a href="../author/borjan/index.html">more posts</a> by this author.</p>
-    </section>
-</section>
-<div class="post-full-footer-right">
-    <a class="author-card-button" href="../author/borjan/index.html">Read More</a>
-</div>
+			<aside class="post-nav">
 
+					<a class="post-nav-next" href="../refreshing-my-nas-configuration/index.html">
+						<section class="post-nav-teaser">
+							<i class="icon icon-arrow-left" aria-label="Next post"></i>
+							<h2 class="post-nav-title">Refreshing my NAS configuration</h2>
+							<p class="post-nav-excerpt">I setup my Network Attached Storage (NAS) back in 2014 after getting…</p>
+							<p class="post-nav-meta"><time datetime="28-08-2021">28 Aug 2021</time></p>
+						</section>
+					</a>
 
-            </footer>
+					<a class="post-nav-prev" href="../untitled/index.html">
+						<section class="post-nav-teaser">
+							<i class="icon icon-arrow-right" aria-label="Previous post"></i>
+							<h2 class="post-nav-title">(Untitled)</h2>
+							<p class="post-nav-excerpt">Ah! The joy of looking at a clean slate. Scary. Wondrous. A…</p>
+							<p class="post-nav-meta"><time datetime="01-12-2019">01 Dec 2019</time></p>
+						</section>
+					</a>
+				<div class="clear"></div>
+			</aside>
 
-
-        </article>
-
-    </div>
+		</div>
+	</article>
 </main>
 
-<aside class="read-next outer">
-    <div class="inner">
-        <div class="read-next-feed">
-
-
-                <article class="post-card post tag-thoughts no-image">
-
-
-    <div class="post-card-content">
-
-        <a class="post-card-content-link" href="../untitled/index.html">
-
-            <header class="post-card-header">
-                    <span class="post-card-tags">Thoughts</span>
-                <h2 class="post-card-title">(Untitled)</h2>
-            </header>
-
-            <section class="post-card-excerpt">
-                <p>Ah! The joy of looking at a clean slate. Scary. Wondrous. A clean and uncluttered editor helps focus on what matters: the prose. I might come to like this. Surrendering to the thoughts</p>
-            </section>
-
-        </a>
-
-        <footer class="post-card-meta">
-
-            <ul class="author-list">
-                <li class="author-list-item">
-
-                    <div class="author-name-tooltip">
-                        Borjan Tchakaloff
-                    </div>
-
-                        <a href="../author/borjan/index.html" class="static-avatar author-profile-image"><svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M3.513 18.998C4.749 15.504 8.082 13 12 13s7.251 2.504 8.487 5.998C18.47 21.442 15.417 23 12 23s-6.47-1.558-8.487-4.002zM12 12c2.21 0 4-2.79 4-5s-1.79-4-4-4-4 1.79-4 4 1.79 5 4 5z" fill="#FFF"></path></g></svg>
-</a>
-                </li>
-            </ul>
-
-            <span class="reading-time">1 min read</span>
-
-        </footer>
-
-    </div>
-
-</article>
-
-        </div>
-    </div>
-</aside>
-
-<div class="floating-header">
-    <div class="floating-header-logo">
-        <a href="../index.html">
-            <span>Steady Monkey</span>
-        </a>
-    </div>
-    <span class="floating-header-divider">—</span>
-    <div class="floating-header-title">A reentrant context manager in Python</div>
-    <div class="floating-header-share">
-        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
-</svg>
-</div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=A%20reentrant%20context%20manager%20in%20Python&amp;url=steadymonkey.eu/blog/a-reentrant-context-manager-in-python/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
-        </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=steadymonkey.eu/blog/a-reentrant-context-manager-in-python/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
-        </a>
-    </div>
-    <progress id="reading-progress" class="progress" value="0">
-        <div class="progress-container">
-            <span class="progress-bar"></span>
-        </div>
-    </progress>
-</div>
 
 
 
 
-        <footer class="site-footer outer">
-            <div class="site-footer-content inner">
-                <section class="copyright"><a href="../index.html">Steady Monkey</a> © 2020</section>
-                <nav class="site-footer-nav">
-                    <a href="../index.html">Latest Posts</a>
-                    
-                    
-                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
-                </nav>
-            </div>
-        </footer>
+		<div class="search-wrapper">
+			<div class="search">
+		    <form class="search-form">
+          <input class="search-field" type="text" placeholder="Search …">
+          <button class="search-button" type="submit">
+						<i class="icon icon-search" aria-hidden="true"></i>
+					</button>
+		    </form>
+				<div class="popular-wrapper">
+					<h4 class="popular-title">Topics</h4>
+					<span class="popular-tags post-tags">
+								<a href="../tag/homelab/index.html">Homelab: 2</a>
+								<a href="../tag/python/index.html">Python: 1</a>
+								<a href="../tag/thoughts/index.html">Thoughts: 1</a>
+					</span>
+				</div>
+				<div class="search-result"></div>
+			</div>
+			<button class="search-wrapper-close" aria-label="Close"></button>
+		</div>
 
-    </div>
+		<div class="nav-footer">
+			<nav class="nav-wrapper" aria-label="Footer">
+				<span class="nav-copy">Steady Monkey © 2021  <a class="nav-rss" title="RSS" href="../rss/index.html" target="_blank"><i class="icon icon-rss" aria-hidden="true"></i></a></span>
+				<span class="nav-credits">Published with <a href="https://ghost.org">Ghost</a> • Theme <a href="https://github.com/zutrinken/attila">Attila</a> • <a class="menu-item js-theme" href="index.html#" data-system="System theme" data-dark="Dark theme" data-light="Light theme"><span class="theme-icon"></span><span class="theme-text">System theme</span> </a> </span>
+			</nav>
+		</div>
 
+	</section>
 
-    <script>
-        var images = document.querySelectorAll('.kg-gallery-image img');
-        images.forEach(function (image) {
-            var container = image.closest('.kg-gallery-image');
-            var width = image.attributes.width.value;
-            var height = image.attributes.height.value;
-            var ratio = width / height;
-            container.style.flex = ratio + ' 1 0%';
-        })
-    </script>
+	<script type="text/javascript" src="../assets/js/script.js?v=2e28d800aa"></script>
 
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
-    </script>
-    <script type="text/javascript" src="../assets/built/jquery.fitvids.js?v=daab612fce"></script>
-
-    <script src="../assets/built/infinitescroll.js?v=daab612fce"></script>
-
-    <script>
-
-// NOTE: Scroll performance is poor in Safari
-// - this appears to be due to the events firing much more slowly in Safari.
-//   Dropping the scroll event and using only a raf loop results in smoother
-//   scrolling but continuous processing even when not scrolling
-$(document).ready(function () {
-    // Start fitVids
-    var $postContent = $(".post-full-content");
-    $postContent.fitVids();
-    // End fitVids
-
-    var progressBar = document.querySelector('#reading-progress');
-    var header = document.querySelector('.floating-header');
-    var title = document.querySelector('.post-full-title');
-
-    var lastScrollY = window.scrollY;
-    var lastWindowHeight = window.innerHeight;
-    var lastDocumentHeight = $(document).height();
-    var ticking = false;
-
-    function onScroll() {
-        lastScrollY = window.scrollY;
-        requestTick();
-    }
-
-    function onResize() {
-        lastWindowHeight = window.innerHeight;
-        lastDocumentHeight = $(document).height();
-        requestTick();
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(update);
-        }
-        ticking = true;
-    }
-
-    function update() {
-        var trigger = title.getBoundingClientRect().top + window.scrollY;
-        var triggerOffset = title.offsetHeight + 35;
-        var progressMax = lastDocumentHeight - lastWindowHeight;
-
-        // show/hide floating header
-        if (lastScrollY >= trigger + triggerOffset) {
-            header.classList.add('floating-active');
-        } else {
-            header.classList.remove('floating-active');
-        }
-
-        progressBar.setAttribute('max', progressMax);
-        progressBar.setAttribute('value', lastScrollY);
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', onScroll, {passive: true});
-    window.addEventListener('resize', onResize, false);
-
-    update();
-
-});
+	<script>
+  $(document).ready(function () {
+		var viewport = $(window);
+		var post = $('.post-content');
+		// Responsive videos with fitVids
+    post.fitVids();
+		// Format code blocks and add line numbers
+		function codestyling() {
+	    $('pre code').each(function(i, e) {
+				// Code highlight
+	      hljs.highlightBlock(e);
+	      // No lines for plain text blocks
+	      if (!$(this).hasClass('language-text')) {
+	        var code = $(this);
+					// Calculate amount of lines
+	        var lines = code.html().split(/\n(?!$)/g).length;
+	        var numbers = [];
+	        if (lines > 1) {
+	          lines++;
+	        }
+	        for (i = 1; i < lines; i++) {
+	          numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+	        }
+	        code.parent().append('<div class="lines">' + numbers + '</div>');
+	      }
+	    });
+	  }
+	  codestyling();
+		// Reading progress bar on window top
+	  function readingProgress() {
+			var postBottom = post.offset().top + post.height();
+			var viewportHeight = viewport.height();
+      var progress = 100 - (((postBottom - (viewport.scrollTop() + viewportHeight) + viewportHeight / 3) / (postBottom - viewportHeight + viewportHeight / 3)) * 100);
+      $('.progress-bar').css('width', progress + '%');
+      (progress > 100) ? $('.progress-container').addClass('complete'): $('.progress-container').removeClass('complete');
+	  }
+	  readingProgress();
+		// Trigger reading progress
+	  viewport.on({
+	    'scroll': function() {
+	      readingProgress();
+	    },
+	    'resize': function() {
+	      readingProgress();
+	    },
+	    'orientationchange': function() {
+	      readingProgress();
+	    }
+	  });
+		// Check if disqus is defined by code injection
+		if (typeof disqus === 'undefined') {
+			// hide comment section
+	    $('.post-comments').css({
+	      'display': 'none'
+	    });
+	  } else {
+	    $('#show-disqus').on('click', function() {
+	      $.ajax({
+	        type: "GET",
+	        url: "//" + disqus + ".disqus.com/embed.js",
+	        dataType: "script",
+	        cache: true
+	      });
+	      $(this).parent().addClass('activated');
+	    });
+	  }
+  });
 </script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/components/prism-python.min.js"></script>
+	
 
 </body>
 </html>

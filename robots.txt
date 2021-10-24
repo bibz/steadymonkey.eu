@@ -2,3 +2,4 @@
 Sitemap: steadymonkey.eu/blog/sitemap.xml
 Disallow: /ghost/
 Disallow: /p/
+Disallow: /email/
