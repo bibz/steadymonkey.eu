@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA[Steady Monkey]]></title><description><![CDATA[Whatever thoughts out of Borjan's head.]]></description><link>https://steadymonkey.eu/</link><image><url>https://steadymonkey.eu/favicon.png</url><title>Steady Monkey</title><link>https://steadymonkey.eu/</link></image><generator>Ghost 4.19</generator><lastBuildDate>Sun, 24 Oct 2021 20:33:14 GMT</lastBuildDate><atom:link href="https://steadymonkey.eu/rss.xml" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Upgrading my NAS to TrueNAS Core]]></title><description><![CDATA[<p>Over the course of the week-end, I (finally) upgraded from FreeNAS 11.3 to TrueNAS Core 12.0.</p><p>One of the most notable things with the new version is that it is strongly discouraged to use a USB stick as boot drive. Since my NAS has an internal USB port</p>]]></description><link>https://steadymonkey.eu/upgrading-my-nas-to-truenas-core/</link><guid isPermaLink="false">6175c0545908100001910bab</guid><category><![CDATA[Homelab]]></category><dc:creator><![CDATA[Borjan Tchakaloff]]></dc:creator><pubDate>Sun, 24 Oct 2021 19:23:26 GMT</pubDate><content:encoded><![CDATA[<p>Over the course of the week-end, I (finally) upgraded from FreeNAS 11.3 to TrueNAS Core 12.0.</p><p>One of the most notable things with the new version is that it is strongly discouraged to use a USB stick as boot drive. Since my NAS has an internal USB port for a boot stick, it is of course what I have been using since the beginning: a very small SanDisk Cruzer Fit of 16GB. Good opportunity to use that old (but unused) Intel SSD of 40GB that has been forgotten in the unnamed box of electronics.</p><p>My initial thought was to unplug everything from the motherboard, the data hard drives, the boot USB stick, the ethernet cable, and install TrueNAS on the SSD. Not only is that a bit on the paranoid side, it is also completely unnecessary. It turns out plugging in the SSD and adding it to the ZFS boot pool was enough to seamlessly upgrade my boot storage to a two-disk mirror. As a side-effect, my boot pool is limited by the smaller disk but I now have a <em>mirrored</em> boot pool. Yay for redundancy. 16GB is enough for now anyway, the main disk space use is on OS upgrade to create a new boot environment. That does not happen so often to me (sic).</p><p>It is worth noting that the NAS do have a fifth SATA port, for the optional ODD (Optical Disk Drive). I decided to flash the BIOS with a well-known community mod to allow disabling the IDE mode on this fifth port, thus allowing the full SATA-3Gbps bandwidth.</p><p>If the USB stick comes to fail, I will still be able to boot the NAS from the SSD (which is the boot drive anyway). When that happens, I might get a USB-to-SATA adapter and fit another small SSD somewhere in the NAS enclosure to keep the mirrored boot pool.</p><p>Back to the upgrade: booting off a USB stick with TrueNAS Core 12.0 and selecting the &quot;upgrade&quot; process went as smooth as can be expected. And&#x2026; that&apos;s it, the NAS is up-to-date now. I am still impressed by how little maintenance is actually needed for FreeNAS/TrueNAS. Setting things up do take some time, though.</p>]]></content:encoded></item><item><title><![CDATA[Refreshing my NAS configuration]]></title><description><![CDATA[<p>I setup my Network Attached Storage (NAS) back in 2014 after getting a nice discount on a HP MicroServer of the previous generation. I added some more ECC RAM, fitted four hard drives, installed FreeNAS, and then happily used it to offload my poor computers of all the media and</p>]]></description><link>https://steadymonkey.eu/refreshing-my-nas-configuration/</link><guid isPermaLink="false">6175c0545908100001910baa</guid><category><![CDATA[Homelab]]></category><dc:creator><![CDATA[Borjan Tchakaloff]]></dc:creator><pubDate>Sat, 28 Aug 2021 20:47:14 GMT</pubDate><content:encoded><![CDATA[<p>I setup my Network Attached Storage (NAS) back in 2014 after getting a nice discount on a HP MicroServer of the previous generation. I added some more ECC RAM, fitted four hard drives, installed FreeNAS, and then happily used it to offload my poor computers of all the media and random stuff I had lying around there. When I moved out of the country in 2015, I packed light and left the NAS behind. Until 2021.</p><p>The 2TB hard drives are not so big by today&apos;s standards but I am happy with the 3.4TB total storage space for now (the hard drives are setup in a RAID-Z2 array, allowing me to lose two drives out of four). Of course if I lose a drive, chances are the others will fail soon too. Maybe even during the resilvering (rebuilding the RAID after replacing the faulty drive). <em>A RAID array is not a backup.</em> I read multiple times that 6 drives would give the best trade-off with RAID-Z2, but unless I fit two more 3.5&quot; hard drives in that small space (it&apos;s not hot in there, but the fans and drives are too loud already), it&apos;s not going to happen any time soon.</p><p>I did a few routine maintenance updates of FreeNAS itself, but I am still lagging behind on an unsupported version. The latest version is not even called FreeNAS anymore, it&apos;s <a href="https://www.truenas.com/truenas-core/">TrueNAS CORE</a> now. Though I have to say that after the initial setup, I simply forgot about it and simply used the NFS shares for a bit. It just worked.</p><p>When I configured FreeNAS in 2014, I had no idea about how many datasets I should create and how I should split my data. I simply went with <em>documents</em> (to store my home dirs), <em>media</em> (music, movies, and the like), and <em>raw</em> (everything else that was not nicely sorted such as mirrors of external drives and copies of old (internal) drives before disposing of the hosts).</p><p>I won&apos;t lie, I am still a neophyte when it comes to handling FreeBSD (e.g. the jails) and configuring it. Last week I managed to mess up all file permissions of one of my datasets. Thankfully it was my home dirs mirror, so it does not matter if I blindly reset the permissions to <code>u+rwX,go=</code>. I also realised that I was naive enough to store my NAS user account on that same dataset. So when I reset the permissions, I also set the wrong bits for the SSH configuration and could not login anymore. It took me a shamefully long time to realise why I could not remotely log-in. I finally solved my problem with the help of the console in the FreeNAS UI: one call to <code>chmod</code> later and I could log-in again.</p><p>Here is the new scheme I came up with:</p><ul><li><code>home</code>: simply the home directories of the NAS accounts; I don&apos;t want to stupidly break my SSH configuration anymore</li><li><code>dione</code>, <code>iapetus</code>, &#x2026;: mirrors of the data stored on my everyday computers</li><li><code>media</code>: original dataset for multimedia files &#x2013; still a good idea</li><li><code>raw</code>: original staging dataset of files I am supposed to review and categorise &#x2013; only relevant if I <em>actually</em> move things out of it, otherwise I should rename it to <code>dumpster</code></li></ul><p>The idea of mirroring data from my computers is that I can leverage ZFS snapshots directly on the NAS and not handle a more-or-less complicated, and more-or-less very slow incremental local backup process. I do not work with really big files on my computers. The only time I access big multimedia files is when I travel and I want a local cache of movies/series. I am fine <code>rsync</code>-ing a subset of my filesystem over the wire to the NAS every day.</p><p>I thought that it would be really nice to be able to browse through the snapshots in a user-friendly manner, for instance if I want to restore an older version of a file. After a few days of leaving that train of thoughts on the back-burner, I came to the conclusion that I actually do not need that feature. I don&apos;t care about selective restoration. I don&apos;t need a time machine for individual files because if I do, then I use a version control system (e.g. Git). I imagine that the only times I would need to restore a snapshot are if I have a hardware failure, and if my files end up encrypted by some external entity asking me to pay them in cryptocurrency in exchange for the decryption key. In both cases I can take the time to navigate through manually cloning the snapshots in question and promoting it or restoring from it.</p><p>Next up: switching from <code>D&#xE9;j&#xE0;Dup</code> against Google Drive to <code>rsync</code> to the NAS.</p>]]></content:encoded></item><item><title><![CDATA[A reentrant context manager in Python]]></title><description><![CDATA[A Python context manager caters for the boilerplate wrapping a resource to offer safety and convenient (re-)use. Upgrading a context manager to be reentrant is a simple and efficient way to allow a scope to be shared, without changing the context semantics.]]></description><link>https://steadymonkey.eu/a-reentrant-context-manager-in-python/</link><guid isPermaLink="false">6175c0545908100001910ba8</guid><category><![CDATA[Python]]></category><dc:creator><![CDATA[Borjan Tchakaloff]]></dc:creator><pubDate>Sun, 05 Jan 2020 18:43:10 GMT</pubDate><content:encoded><![CDATA[<p>A Python context manager caters for the boilerplate wrapping a resource to offer safety and convenient (re-)use. This protocol ensures that once the context is initialised, it will be torn down whatever happens. Examples of resource handling are input/output operations, session management, thread locking, etc. In this article, we will take a focus peek at one &quot;<a href="https://www.python.org/dev/peps/pep-0020/#the-zen-of-python">honking great idea</a>&quot;: a <strong>reentrant context manager</strong>.</p><p>There has been <a href="http://johnj.com/intro-to-context-managers-in-python.html">many</a> <a href="https://book.pythontips.com/en/latest/context_managers.html">articles</a> and pages of <a href="https://en.wikibooks.org/wiki/Python_Programming/Context_Managers">documentation</a> to explain why context managers are a good thing, and why you would want to <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">always<em> </em>handle your resources</a> with them.</p><p>Drawing from classic computer science principles, we propose here to extend the <em>context manager</em> with the <em>reentrant</em> principle to achieve a simple, yet powerful, resource management.</p><h2 id="our-case-study-a-data-store">Our case study: a data store</h2><p>Suppose you are writing a library for a (remote) service. It could be that you want to offer a nice Python interface for your own service, or simply that you want to abstract the service itself from your business code &#x2014; a <a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">sound idea</a>.</p><p>Our example service is a data store. A user can push, and then pull, arbitrary data from it. Any data that is stored there is associated to a unique identifier. Later, and at one&apos;s request, the identifier can be used to pull the data out of the store once and for all. The store will forget about that piece of data.</p><pre><code class="language-python"># datastore.py
+from abc import ABC, abstractmethod
+
+
+Content = bytes
+Identifier = str
+
+
+class Datastore(ABC):
+
+    @abstractmethod
+    def push(self, content: Content) -&gt; Identifier:
+        ...
+
+    @abstractmethod
+    def pull(self, identifier: Identifier) -&gt; Content:
+        ...
+</code></pre><p>The interface is simple and clean. <code>Datastore</code> is an <a href="https://docs.python.org/3/glossary.html#term-abstract-base-class">abstract class</a> with two public (abstract) methods.</p><p>Let&apos;s create an in-memory datastore to mock the service and trace the interface calls:</p><pre><code class="language-python"># mock_datastore.py
+import logging
+from uuid import uuid4
+
+from datastore import Content, Datastore, Identifier
+
+
+class InMemoryDatastore(Datastore):
+
+    _log = logging.getLogger(&apos;InMemoryDatastore&apos;)
+    _store = []
+
+    def push(self, content):
+        identifier = str(uuid4())
+        self._log.debug(&apos;PUSH: %s with %s bytes&apos;, identifier, len(content))
+        self._store[identifier] = content
+        return identifier
+
+    def pull(self, identifier):
+        if identifier not in self._store:
+            raise KeyError(f&quot;Unknown identifier {identifier!r}&quot;)
+        self._log.debug(f&apos;PULL: %s&apos;, identifier)
+        content = self._store.pop(identifier)
+        return content
+</code></pre><p>We can now store and retrieve content from a datastore:</p><pre><code class="language-python">&gt;&gt;&gt; import logging
+&gt;&gt;&gt; logging.basicConfig(level=logging.DEBUG)
+&gt;&gt;&gt; from mock_datastore import InMemoryDatastore as MockDatastore
+&gt;&gt;&gt; client = MockDatastore()
+&gt;&gt;&gt; i = client.push(b&apos;an entry&apos;)
+DEBUG:InMemoryDatastore:PUSH: 53d387c9-8d96-4ca8-a1c5-f6d5efffc572 with 8 bytes
+&gt;&gt;&gt; client.pull(i)
+DEBUG:InMemoryDatastore:PULL: 53d387c9-8d96-4ca8-a1c5-f6d5efffc572
+b&apos;an entry&apos;
+</code></pre><h2 id="-for-authenticated-users">&#x2026; for authenticated users</h2><p>Say there is a new requirement: all actions undertook against the data store must be authenticated. The client interface should handle this and provide a construct to deal with <em>sessions</em>. There is no need for the interface consumer to have to manually log in and out, we will not change the <code>Datastore</code> interface. The library we are writing is supposed to <em>help</em> the consumer, not clutter its interface.</p><p>We will define the authentication methods as &quot;private/protected&quot; and use them to push and pull data to the data store, from the implementation classes themselves. To avoid repeating ourselves, we simply define a new interface:</p><pre><code class="language-python"># authenticated_datastore.py
+
+from abc import abstractmethod
+from contextlib import contextmanager
+
+from datastore import Datastore
+
+
+AuthToken = str
+
+
+class AuthenticatedDatastore(Datastore):
+
+    @abstractmethod
+    def push(self, content):
+        ...
+
+    @abstractmethod
+    def pull(self, identifier):
+        ...
+
+    @abstractmethod
+    def _login(self, credentials) -&gt; AuthToken:
+        ...
+
+    @abstractmethod
+    def _logout(self, token: AuthToken):
+        ...
+</code></pre><p>Good programmers are lazy, they say. Programmers always want to make things silly simple and efficient. I could not agree more, especially if there is an exposed interface at play.</p><p>The implementation classes have to remember to call <code>_logout()</code> every time they call <code>_login()</code>. What happens to us when we burden ourselves with hand-woven resource management? Things break, memory leaks, and we become sad.</p><p>The authentication as we just defined it <strong>is a resource</strong> that we manage: we have to create (<em>to log in</em>) and destroy (<em>to log out</em>) each instance we handle (<em>a session</em>). Let&apos;s take a look at a nifty solution Python offers us: the context manager.</p><h2 id="what-a-context-manager-is-by-example">What a context manager is, by example</h2><p>The Python documentation describes <a href="https://docs.python.org/3/reference/datamodel.html#context-managers">a context manager</a> as:</p><blockquote>[&#x2026;] an object that defines the runtime context to be established when executing a <code>with</code> statement. The context manager handles the entry into, and the exit from, the desired runtime context for the execution of the block of code.</blockquote><p>Said differently, the scope of a context manager is tied to an object life-cycle. But instead of the regular <em>initialisation</em> and <em>destruction</em> of the object, a different protocol is used (aptly named&#x2026; <a href="https://docs.python.org/3/library/stdtypes.html#typecontextmanager">Context Manager</a>). It defines the interface for <em>entry</em> and <em>exit</em> of the scope.</p><p>We described earlier our resource as <em>an authentication session</em>. Its actions were <em>to log in</em> and <em>to log out</em>. Simply translated to Python into a new mock:</p><pre><code class="language-python">from authenticated_datastore import AuthToken, AuthenticatedDatastore
+
+
+class InMemoryAuthenticatedDatastore(InMemoryDatastore):
+
+    _log = logging.getLogger(&apos;InMemoryAuthenticatedDatastore&apos;)
+    credentials = &apos;foo:bar&apos;
+
+    @contextmanager
+    def _session(self):
+        session_token = self._login(self.credentials)
+        try:
+            yield
+        finally:
+            self._logout(session_token)
+
+    @abstractmethod
+    def _login(self, credentials) -&gt; AuthToken:
+        token = hash(credentials)
+        self._log.debug(&apos;LOGIN: %s&apos;, token)
+        return token
+
+    @abstractmethod
+    def _logout(self, token: AuthToken):
+        self._log.debug(&apos;LOGOUT: %s&apos;, token)
+
+    def push(self, content):
+        with self._session():
+            return super().push(content)
+
+    def pull(self, identifier):
+        with self._session():
+            return super().push(content)</code></pre><p>The session context manager is built so that once we are successfully logged in &#x2014; when we enter the scope of the <code>with</code> block &#x2014; we will always log out <em>no matter what happens</em>. Indeed, thanks to the generator-like approach in our context manager, we <em>yield</em> within the scope of the <code>try</code> block. We exit this block only when the yield returns &#x2014; that is, when the <code>with</code> scope is exited from the calling block.</p><p>Basically, that means that even if an exception is raised when we are within the scope of the session context manager, the session will be torn down before the exception ripples up:</p><pre><code class="language-python">&gt;&gt;&gt; import logging
+&gt;&gt;&gt; logging.basicConfig(level=logging.DEBUG)
+&gt;&gt;&gt; from mock_datastore import InMemoryAuthenticatedDatastore as MockDatastore
+&gt;&gt;&gt; client = MockDatastore()
+&gt;&gt;&gt; i = client.push(b&apos;an entry&apos;)
+DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:PUSH: f0d4dc6b-38fa-485d-b96d-0ced4c10c382 with 8 bytes
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768
+&gt;&gt;&gt; c = client.pull(i)
+DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:PULL: f0d4dc6b-38fa-485d-b96d-0ced4c10c382
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768
+&gt;&gt;&gt; print(c)
+b&apos;an entry
+&gt;&gt;&gt; client.pull(i)
+DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768
+Traceback (most recent call last):
+  ...
+    raise KeyError(f&quot;Unknown identifier {identifier!r}&quot;)
+KeyError: &quot;Unknown identifier &apos;f0d4dc6b-38fa-485d-b96d-0ced4c10c382&apos;&quot;
+</code></pre><h2 id="performing-many-operations">Performing many operations</h2><p>As we just saw, each operation handles its own session scope. From an interface point of view, this is great, the datastore library is responsible for its own success and the library clients do not have to know about the session details. This also allows us to configure a datastore service (<code>Datastore</code> and its children) at instantiation time and then forget about the service details. Perfect for dependency injection.</p><p>But calling many operations sequentially is far from ideal. Each operation will initiate a new session, perform its action, and then close the session. In our mono-threaded example, we are taking the network hit every single time we request a service operation.</p><p>Conversely, when a consumer wants to perform batch operations, it would be beneficial to open only one session, perform all operations, and only then close the session.</p><p>Let us see what trace we get if we try this with our current session context manager:</p><pre><code class="language-python">&gt;&gt;&gt; from mock_datastore import InMemoryDatastore as MockDatastore
+&gt;&gt;&gt; client = MockDatastore()
+&gt;&gt;&gt; with client._session():
+...     i = client.push(&apos;another entry&apos;)
+...     client.pull(i)
+... 
+DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:PUSH: 3034f5e6-3ee8-42cb-b22e-48901afb1097 with 13 bytes
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:LOGIN: 5444710130385190768
+DEBUG:InMemoryAuthenticatedDatastore:PULL: 3034f5e6-3ee8-42cb-b22e-48901afb1097
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768
+&apos;another entry&apos;
+DEBUG:InMemoryAuthenticatedDatastore:LOGOUT: 5444710130385190768</code></pre><p>The current behaviour is clearly not what we want, we now even have one more session wrapping everything else!</p><p>In a lucky scenario, the remote service behaves nicely and re-use the existing session whenever we try to authenticate ourselves again. But unless this is an explicit service feature, we really should cater for this locally, in the library.</p><h2 id="re-using-the-existing-session-or-the-reentrant-context-manager">Re-using the existing session, or the reentrant context manager</h2><p>The idea driving our use-case is that we keep a session open until it has served its purpose. We can only achieve this by <em>remembering</em> that there is an open session already. And when a request for a session pops up, through a call to the session context manager, we can safely re-use the existing session instead of asking for a new one.</p><p>In computer science, this concept is famously applied to locks. A simple lock can be acquired once. Before any new acquiring, even by the current holder, the simple lock must be released. On the other hand, a reentrant lock can be acquired time and again by its current holder.</p><p>Our dummy in-memory datastore needs an update:</p><pre><code class="language-python">from typing import Optional
+
+
+class InMemoryReentrantDatastore(InMemoryAuthenticatedDatastore):
+
+    _log = logging.getLogger(&apos;InMemoryReentrantDatastore&apos;)
+    _session_token: Optional[AuthToken] = None
+
+    @contextmanager
+    def _session(self):
+        if self._session_token:
+            yield
+            return
+
+        self._session_token = self._login(self.credentials)
+        try:
+            yield
+        finally:
+            self._logout(self._session_token)
+</code></pre><p>If a session token exists, it means that we are already within the scope of the session context manager. Thus we simply yield to allow the caller to complete, and then return from the context manager. The context manager that initiated the session token is the only one allowed to log out.</p><pre><code class="language-python">&gt;&gt;&gt; from mock_datastore import InMemoryReentrantDatastore as MockDatastore
+&gt;&gt;&gt; client = MockDatastore()
+&gt;&gt;&gt; with client._session():
+...     i = client.push(&apos;another entry&apos;)
+...     client.pull(i)
+...
+DEBUG:InMemoryReentrantDatastore:LOGIN: -1271783380944662680
+DEBUG:InMemoryReentrantDatastore:PUSH: db578045-674b-463f-9475-156315fcce29 with 13 bytes
+DEBUG:InMemoryReentrantDatastore:PULL: db578045-674b-463f-9475-156315fcce29
+&apos;another entry&apos;
+DEBUG:InMemoryReentrantDatastore:LOGOUT: -1271783380944662680</code></pre><p>The session scope is now respected: there is only one session created for the <code>InMemoryReentrantDatastore._session()</code> context manager scope, no matter how many calls to methods requiring a session.</p><p>We should note that the current interface does not expose the session context manager as public to the library clients. Considering our contrived example, we can simply flatten the whole hierarchy and keep only one interface and one in-memory implementation. This is left as an exercise.</p><h2 id="conclusion">Conclusion</h2><p>Python context managers are an easy way to abstract resource management in libraries. Their simple form flows and is enough as long as they remain independent. Upgrading a context manager to be reentrant is a simple and efficient way to allow a scope to be shared, without changing the context semantics.</p><p><a href="https://www.python.org/dev/peps/pep-0318/">Decorators</a> are another powerful concept in Python. Our example uses the <a href="https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager"><code>contextlib.contextmanager</code> decorator</a> to wrap a function and make it into a context manager.</p><p>Would you like to use the session context manager as a decorator too? Go on, try it! Try both approaches and see which one reads and writes better <em>from the library client.</em></p>]]></content:encoded></item><item><title><![CDATA[(Untitled)]]></title><description><![CDATA[<p>Ah! The joy of looking at a clean slate. Scary. Wondrous.</p><p>A clean and uncluttered editor helps focus on what matters: the prose. I might come to like this. Surrendering to the thoughts that come to life while keyed on the computer. It is a form of meditation.</p><p>Enough for</p>]]></description><link>https://steadymonkey.eu/untitled/</link><guid isPermaLink="false">6175c0545908100001910ba7</guid><category><![CDATA[Thoughts]]></category><dc:creator><![CDATA[Borjan Tchakaloff]]></dc:creator><pubDate>Sun, 01 Dec 2019 17:21:44 GMT</pubDate><content:encoded><![CDATA[<p>Ah! The joy of looking at a clean slate. Scary. Wondrous.</p><p>A clean and uncluttered editor helps focus on what matters: the prose. I might come to like this. Surrendering to the thoughts that come to life while keyed on the computer. It is a form of meditation.</p><p>Enough for now, I have to figure out if this interface can appear in French too. Not that it matters so much for what I want to do. Who knows, I might want to advocate for this platform to non tech-savvy people.</p><hr><p>No, really. This editor is the best I&apos;ve tried so far. Oh, I can even drag-n-drop blocks. Neat &#x263A;!</p><hr><p>It is a shame the interface is not translated. I suppose I&apos;ll just have to take the role of editor as well as publisher.</p>]]></content:encoded></item></channel></rss>
