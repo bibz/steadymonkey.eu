@@ -9,7 +9,7 @@
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=ff94d5edfa" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=d729979f06" />
 
 	<script>
 			var siteUrl = 'https://steadymonkey.eu';
@@ -61,14 +61,28 @@
     }
 }
     </script>
-<style>:root {--ghost-accent-color: #b6a800;}</style>
+
     <meta name="generator" content="Ghost 4.19" />
     <link rel="alternate" type="application/rss+xml" title="Steady Monkey" href="https://steadymonkey.eu/rss.xml" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-solarizedlight.min.css" integrity="sha512-fibfhB71IpdEKqLKXP/96WuX1cTMmvZioYp7T6I+lTbvJrrjEGeyYdAf09GHpFptF8toQ32woGZ8bw9+HjZc0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="me" href="https://freiburg.social/@docbibi" />
+<link rel="stylesheet" href="https://esm.sh/emfed@1/toots.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    :root {--ghost-accent-color: #b6a800;}
+    /* Quick hack to reset conflicting styles. */
+    .post-content .toots a, .post-content .toots a:hover, .post-content .toots a:focus {
+        box-shadow: none;
+    }
+    .post-content .toots .body a {
+        box-shadow: inset 0 -2px 0 var(--ghost-accent-color);
+    }
+    .post-content .toots .body a:hover,.post-content .toots .body a:focus  {
+        box-shadow: inset 0 -3px 0 var(--ghost-accent-color);
+    }
+</style>
+<link rel="me" href="https://freiburg.social/@docbibi" /><style>:root {--ghost-accent-color: #b6a800;}</style>
 </head>
 
 <body class="tag-template tag-atreus">
@@ -292,12 +306,13 @@
 
 	</section>
 
-	<script type="text/javascript" src="/assets/js/script.js?v=ff94d5edfa"></script>
+	<script type="text/javascript" src="/assets/js/script.js?v=d729979f06"></script>
 
 	
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" integrity="sha512-yIpe1UXrH/ZWwu3n7MdHNfMbPXftP0jlg9+lRhzlpbolElt33h3PGx9ICzqf/k+yca3QNzqcO3sdtKJuYRTi4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="https://esm.sh/emfed@1" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 </html>
