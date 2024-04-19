@@ -9,7 +9,7 @@
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=d729979f06" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=fb080c3fac" />
 
 	<script>
 			var siteUrl = 'https://steadymonkey.eu';
@@ -29,7 +29,8 @@
 			}
 	</script>
 
-	<link rel="canonical" href="https://steadymonkey.eu/a-reentrant-context-manager-in-python/" />
+	<meta name="description" content="A Python context manager caters for the boilerplate wrapping a resource to offer safety and convenient (re-)use. Upgrading a context manager to be reentrant is a simple and efficient way to allow a scope to be shared, without changing the context semantics." />
+    <link rel="canonical" href="https://steadymonkey.eu/a-reentrant-context-manager-in-python/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
     <link rel="amphtml" href="https://steadymonkey.eu/a-reentrant-context-manager-in-python/amp/" />
     
@@ -83,9 +84,11 @@
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.19" />
+    <meta name="generator" content="Ghost 4.48" />
     <link rel="alternate" type="application/rss+xml" title="Steady Monkey" href="https://steadymonkey.eu/rss.xml" />
     
+    <script defer src="/public/cards.min.js?v=fb080c3fac"></script>
+    <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=fb080c3fac">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-solarizedlight.min.css" integrity="sha512-fibfhB71IpdEKqLKXP/96WuX1cTMmvZioYp7T6I+lTbvJrrjEGeyYdAf09GHpFptF8toQ32woGZ8bw9+HjZc0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -441,13 +444,19 @@ DEBUG:InMemoryReentrantDatastore:LOGOUT: -1271783380944662680</code></pre><p>The
 		<div class="nav-footer">
 			<nav class="nav-wrapper" aria-label="Footer">
 				<span class="nav-copy">Steady Monkey &copy; 2024  <a class="nav-rss" title="RSS" href="https://steadymonkey.eu/rss.xml" target="_blank"><i class="icon icon-rss" aria-hidden="true"></i></a></span>
+				<ul>
+		<li class="nav-docbibi-freiburg-social"><a href="https://freiburg.social/@docbibi"><span>@docbibi@freiburg.social</span></a></li>
+		<li class="nav-docbibi-sourcehut"><a href="https://git.sr.ht/~docbibi/"><span>docbibi (SourceHut)</span></a></li>
+		<li class="nav-bibz-github"><a href="https://github.com/bibz"><span>bibz (GitHub)</span></a></li>
+</ul>
+
 				<span class="nav-credits">Published with <a href="https://ghost.org">Ghost</a> &bull; Theme <a href="https://github.com/zutrinken/attila">Attila</a> &bull; <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme"><span class="theme-icon"></span><span class="theme-text">System theme</span> </a> </span>
 			</nav>
 		</div>
 
 	</section>
 
-	<script type="text/javascript" src="/assets/js/script.js?v=d729979f06"></script>
+	<script type="text/javascript" src="/assets/js/script.js?v=fb080c3fac"></script>
 
 	<script>
   $(document).ready(function () {

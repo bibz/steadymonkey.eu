@@ -9,7 +9,7 @@
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=d729979f06" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=fb080c3fac" />
 
 	<script>
 			var siteUrl = 'https://steadymonkey.eu';
@@ -41,7 +41,7 @@
 Eventually the presentation showed a few actual domain events they use in production. They had German names" />
     <meta property="og:url" content="https://steadymonkey.eu/on-domain-events-english-and-ubiquitous-language/" />
     <meta property="article:published_time" content="2024-04-17T12:31:37.000Z" />
-    <meta property="article:modified_time" content="2024-04-17T13:34:26.000Z" />
+    <meta property="article:modified_time" content="2024-04-19T15:13:13.000Z" />
     <meta property="article:tag" content="Thoughts" />
     <meta property="article:tag" content="DomainDrivenDesign" />
     
@@ -77,7 +77,7 @@ Eventually the presentation showed a few actual domain events they use in produc
     "headline": "On Domain Events, English, and ubiquitous language",
     "url": "https://steadymonkey.eu/on-domain-events-english-and-ubiquitous-language/",
     "datePublished": "2024-04-17T12:31:37.000Z",
-    "dateModified": "2024-04-17T13:34:26.000Z",
+    "dateModified": "2024-04-19T15:13:13.000Z",
     "keywords": "Thoughts, DomainDrivenDesign",
     "description": "I attended a Python meetup last week. The main presentation was a showcase of an &quot;Event System&quot;, or how they used messages to share customer data between their ERP and their CRM.\nEventually the presentation showed a few actual domain events they use in production. They had German names",
     "mainEntityOfPage": {
@@ -87,9 +87,11 @@ Eventually the presentation showed a few actual domain events they use in produc
 }
     </script>
 
-    <meta name="generator" content="Ghost 4.19" />
+    <meta name="generator" content="Ghost 4.48" />
     <link rel="alternate" type="application/rss+xml" title="Steady Monkey" href="https://steadymonkey.eu/rss.xml" />
     
+    <script defer src="/public/cards.min.js?v=fb080c3fac"></script>
+    <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=fb080c3fac">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-solarizedlight.min.css" integrity="sha512-fibfhB71IpdEKqLKXP/96WuX1cTMmvZioYp7T6I+lTbvJrrjEGeyYdAf09GHpFptF8toQ32woGZ8bw9+HjZc0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -179,11 +181,10 @@ Eventually the presentation showed a few actual domain events they use in produc
 		<div class="inner">
 
 			<section class="post-content">
-				<p>I attended a Python meetup last week, hosted by <a href="https://jobrad.org/">JobRad</a>. The main presentation was a showcase of an "Event System", or how they used messages to share customer data between their ERP (<em>Enterprise Resource Planning</em>, the big database of their processes, inventory, and all other business activities) and their CRM (<em>Customer Relationship Management</em>, the main piece of software required by customer support with sales orders and support tickets).</p><p>I liked the presentation a lot, which isn't surprising given I spent the last five years head down in Domain Driven Design (DDD), message-driven architecture, and event-sourcing. Due to the audience variety — it was a general Python meetup after all, not a specialised one — the hosts gave us a good walkthrough with hints of advanced topics (especially domain model evolution and versioning).<em> As a sidenote, I will be talking about <a href="https://program.europython.eu/europython-2024/talk/review/HRKKC9AVJS8GNS8X9MHSFWKF9PHQEUWK">"Event Sourcing in production"</a> at <a href="https://ep2024.europython.eu/">EuroPython 2024</a> in July.</em></p><p>Eventually the presentation showed a few actual domain events they use in production. They had German names (ed. JobRad is a German company). The rationale shared with us is that those are the business terms as they are used by the stakeholders. They are directly taken from the ubiquitous language: said otherwise, they did not try to cater to their more international engineering team but sticked to the business processes.</p><p>After an initial surprise, I must say<em> I find this approach bold yet totally rational</em>. Let me explain.</p><p>JobRad is bigger than just Germany, at the very least Austria is already running, and I understood they were targetting other countries in the near future. In addition, their software engineering department grew quickly in the last couple of years and English is now apparently the primary working language for software folks. One could think the best approach would be to harmonise the codebase over English names throughout, from the code symbols to the developer documentation. <em>Making virtually every term understandable by every single programmer</em> (let's assume English is a requirement for that job), and hence expressing the business processes and intents in a common language.</p><p>(Un-)Fortunately, there is another shared language: the ubiquitous language. Nobody had to approximate translations for its terms. It is a gift by the stakeholders packed with history and meaning. Every term we come up with, as developers of the system, is bound to be an approximation. It is the (mental) model we make of the concepts we were told to work with, we interviewed people about, or simply read definitions somewhere. An abstraction is by definition less precise than the object it represents.<br>An additional piece of information was given during the Q&amp;A: the most important events are deeply related to the German tax system. They are not generalised tax events but really encode the legal process followed by the company.</p><p>Whatever the language these messages use, let's not forget that the transport mechanism is an event bus. Want an English version of the messages? Place a consumer that translates the concepts and forwards them onward. It's cheap enough to set up. In my experience, the maintenance headache comes from fitting new requirements and the natural evolution of one's understanding onto the codified concepts, not from a 1-1 mapping of a pre-existing concept.</p><p>In the spirit of DDD, let's agree to accept that the code we write is more than machine instructions. The evangelists told us to <em>live by</em> the ubiquitous language, and I think they had a good reason to.</p><!--kg-card-begin: html--><a class="mastodon-thread"
+				<p>I attended a Python meetup last week, hosted by <a href="https://jobrad.org/">JobRad</a>. The main presentation was a showcase of an "Event System", or how they used messages to share customer data between their ERP (<em>Enterprise Resource Planning</em>, the big database of their processes, inventory, and all other business activities) and their CRM (<em>Customer Relationship Management</em>, the main piece of software required by customer support with sales orders and support tickets).</p><p>I liked the presentation a lot, which isn't surprising given I spent the last five years head down in Domain Driven Design (DDD), message-driven architecture, and event-sourcing. Due to the audience variety — it was a general Python meetup after all, not a specialised one — the hosts gave us a good walkthrough with hints of advanced topics (especially domain model evolution and versioning).<em> As a sidenote, I will be talking about <a href="https://program.europython.eu/europython-2024/talk/review/HRKKC9AVJS8GNS8X9MHSFWKF9PHQEUWK">"Event Sourcing in production"</a> at <a href="https://ep2024.europython.eu/">EuroPython 2024</a> in July.</em></p><p>Eventually the presentation showed a few actual domain events they use in production. They had German names (ed. JobRad is a German company). The rationale shared with us is that those are the business terms as they are used by the stakeholders. They are directly taken from the ubiquitous language: said otherwise, they did not try to cater to their more international engineering team but sticked to the business processes.</p><p>After an initial surprise, I must say<em> I find this approach bold yet totally rational</em>. Let me explain.</p><p>JobRad is bigger than just Germany, at the very least Austria is already running, and I understood they were targetting other countries in the near future. In addition, their software engineering department grew quickly in the last couple of years and English is now apparently the primary working language for software folks. One could think the best approach would be to harmonise the codebase over English names throughout, from the code symbols to the developer documentation. <em>Making virtually every term understandable by every single programmer</em> (let's assume English is a requirement for that job), and hence expressing the business processes and intents in a common language.</p><p>(Un-)Fortunately, there is another shared language: the ubiquitous language. Nobody had to approximate translations for its terms. It is a gift by the stakeholders packed with history and meaning. Every term we come up with, as developers of the system, is bound to be an approximation. It is the (mental) model we make of the concepts we were told to work with, we interviewed people about, or simply read definitions somewhere. An abstraction is by definition less precise than the object it represents.<br>An additional piece of information was given during the Q&amp;A: the most important events are deeply related to the German tax system. They are not generalised tax events but really encode the legal process followed by the company.</p><p>Whatever the language these messages use, let's not forget that the transport mechanism is an event bus. Want an English version of the messages? Place a consumer that translates the concepts and forwards them onward. It's cheap enough to set up. In my experience, the maintenance headache comes from fitting new requirements and the natural evolution of one's understanding onto the codified concepts, not from a 1-1 mapping of a pre-existing concept.</p><p>In the spirit of DDD, let's agree to accept that the code we write is more than machine instructions. The evangelists told us to <em>live by</em> the ubiquitous language, and I think they had a good reason to.</p><hr><h3 id="on-the-fediverse%E2%80%A6">On the Fediverse…</h3><!--kg-card-begin: html--><a class="mastodon-thread"
    href="https://freiburg.social/@docbibi"
    data-toot-id="112286733194538412"
-   data-exclude-post="true"
-   >Comments from the Fediverse</a><!--kg-card-end: html-->
+   >I advertised this post on Mastodon</a><!--kg-card-end: html-->
 			</section>
 
 			<section class="post-footer">
@@ -267,13 +268,19 @@ Eventually the presentation showed a few actual domain events they use in produc
 		<div class="nav-footer">
 			<nav class="nav-wrapper" aria-label="Footer">
 				<span class="nav-copy">Steady Monkey &copy; 2024  <a class="nav-rss" title="RSS" href="https://steadymonkey.eu/rss.xml" target="_blank"><i class="icon icon-rss" aria-hidden="true"></i></a></span>
+				<ul>
+		<li class="nav-docbibi-freiburg-social"><a href="https://freiburg.social/@docbibi"><span>@docbibi@freiburg.social</span></a></li>
+		<li class="nav-docbibi-sourcehut"><a href="https://git.sr.ht/~docbibi/"><span>docbibi (SourceHut)</span></a></li>
+		<li class="nav-bibz-github"><a href="https://github.com/bibz"><span>bibz (GitHub)</span></a></li>
+</ul>
+
 				<span class="nav-credits">Published with <a href="https://ghost.org">Ghost</a> &bull; Theme <a href="https://github.com/zutrinken/attila">Attila</a> &bull; <a class="menu-item js-theme" href="#" data-system="System theme" data-dark="Dark theme" data-light="Light theme"><span class="theme-icon"></span><span class="theme-text">System theme</span> </a> </span>
 			</nav>
 		</div>
 
 	</section>
 
-	<script type="text/javascript" src="/assets/js/script.js?v=d729979f06"></script>
+	<script type="text/javascript" src="/assets/js/script.js?v=fb080c3fac"></script>
 
 	<script>
   $(document).ready(function () {
