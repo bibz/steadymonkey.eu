@@ -9,7 +9,7 @@
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=3d6c758e62" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css?v=a17a7e1305" />
 
 	<script>
 			var siteUrl = 'https://steadymonkey.eu';
@@ -28,6 +28,19 @@
 							break;
 			}
 	</script>
+
+
+
+			<style>
+				.theme-dark:root {
+				  --ghost-accent-color: #b6a800;
+				}
+				@media (prefers-color-scheme: dark) {
+				  html:not(.theme-light):root {
+				    --ghost-accent-color: #b6a800;
+				  }
+				}
+			</style>
 
 	<link rel="canonical" href="https://steadymonkey.eu/onward-with-the-atreus-keyboard/" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -86,8 +99,8 @@
     <meta name="generator" content="Ghost 4.48" />
     <link rel="alternate" type="application/rss+xml" title="Steady Monkey" href="https://steadymonkey.eu/rss.xml" />
     
-    <script defer src="/public/cards.min.js?v=3d6c758e62"></script>
-    <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=3d6c758e62">
+    <script defer src="/public/cards.min.js?v=a17a7e1305"></script>
+    <link rel="stylesheet" type="text/css" href="/public/cards.min.css?v=a17a7e1305">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-solarizedlight.min.css" integrity="sha512-fibfhB71IpdEKqLKXP/96WuX1cTMmvZioYp7T6I+lTbvJrrjEGeyYdAf09GHpFptF8toQ32woGZ8bw9+HjZc0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/line-numbers/prism-line-numbers.min.css" integrity="sha512-cbQXwDFK7lj2Fqfkuxbo5iD1dSbLlJGXGpfTDqbggqjHJeyzx88I3rfwjS38WJag/ihH7lzuGlGHpDBymLirZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -123,24 +136,19 @@
 </ul>
 
 				<ul class="nav-meta">
-  <li class="nav-search" style="display: none;">
-    <a title="Search">
+  <li class="nav-search">
+    <a title="Search" data-ghost-search>
       <i class="icon icon-search" aria-hidden="true"></i>
       <span>Search</span>
     </a>
   </li>
-  <!--
-    <li class="nav-subscribe">
-      <a href="#/portal">Subscribe</a>
-    </li>
-  -->
 </ul>
 		</nav>
 
 		<div class="nav-wrapper-control">
 			<div class="inner">
 				<a class="nav-menu" role="button"><i class="icon icon-menu" aria-hidden="true"></i>Menu</a>
-				<a class="nav-search" style="display: none;" title="Search" role="button"><i class="icon icon-search" aria-hidden="true"></i></a>
+				<a class="nav-search" title="Search" role="button" data-ghost-search><i class="icon icon-search" aria-hidden="true"></i></a>
 			</div>
 		</div>
 	</div>
@@ -182,22 +190,6 @@
 
 			<section class="post-footer">
 
-				<div class="post-share">
-					<span class="post-info-label">Share</span>
-					<a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=Onward with the Atreus keyboard&url=https://steadymonkey.eu/onward-with-the-atreus-keyboard/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-						<i class="icon icon-twitter" aria-hidden="true"></i>
-					</a>
-					<a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://steadymonkey.eu/onward-with-the-atreus-keyboard/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-						<i class="icon icon-facebook" aria-hidden="true"></i>
-					</a>
-					<a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://steadymonkey.eu/onward-with-the-atreus-keyboard//&amp;title=Onward with the Atreus keyboard" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
-						<i class="icon icon-linkedin" aria-hidden="true"></i>
-					</a>
-					<a title="Email" aria-label="Email" class="email" href="mailto:?subject=Onward with the Atreus keyboard&amp;body=https://steadymonkey.eu/onward-with-the-atreus-keyboard/">
-						<i class="icon icon-mail" aria-hidden="true"></i>
-					</a>
-				</div>
-
 				<aside class="post-tags">
 					<span class="post-info-label">Topic</span>
 					<a href="/tag/atreus/">Atreus</a>
@@ -206,10 +198,6 @@
 			</section>
 
 
-			<section class="post-comments">
-				<a id="show-disqus" class="post-comments-activate">Show Comments</a>
-			   <div id="disqus_thread"></div>
-			</section>
 
 
 			<aside class="post-nav">
@@ -241,31 +229,6 @@
 
 
 
-
-		<div class="search-wrapper">
-			<div class="search">
-		    <form class="search-form">
-          <input class="search-field" type="text" placeholder="Search …">
-          <button class="search-button" type="submit">
-						<i class="icon icon-search" aria-hidden="true"></i>
-					</button>
-		    </form>
-				<div class="popular-wrapper">
-					<h4 class="popular-title">Topics</h4>
-					<span class="popular-tags post-tags">
-								<a href='/tag/atreus/'>Atreus: 6</a>
-								<a href='/tag/homelab/'>Homelab: 4</a>
-								<a href='/tag/thoughts/'>Thoughts: 3</a>
-								<a href='/tag/mainboard/'>Mainboard: 3</a>
-								<a href='/tag/python/'>Python: 1</a>
-								<a href='/tag/domaindrivendesign/'>DomainDrivenDesign: 1</a>
-					</span>
-				</div>
-				<div class="search-result"></div>
-			</div>
-			<button class="search-wrapper-close" aria-label="Close"></button>
-		</div>
-
 		<div class="nav-footer">
 			<nav class="nav-wrapper" aria-label="Footer">
 				<span class="nav-copy">Steady Monkey &copy; 2024  <a class="nav-rss" title="RSS" href="https://steadymonkey.eu/rss.xml" target="_blank"><i class="icon icon-rss" aria-hidden="true"></i></a></span>
@@ -281,7 +244,7 @@
 
 	</section>
 
-	<script type="text/javascript" src="/assets/js/script.js?v=3d6c758e62"></script>
+	<script type="text/javascript" src="/assets/js/script.js?v=a17a7e1305"></script>
 
 	<script>
   $(document).ready(function () {
@@ -293,7 +256,7 @@
 		function codestyling() {
 	    $('pre code').each(function(i, e) {
 				// Code highlight
-	      hljs.highlightBlock(e);
+	      hljs.highlightElement(e);
 	      // No lines for plain text blocks
 	      if (!$(this).hasClass('language-text')) {
 	        var code = $(this);
@@ -332,23 +295,7 @@
 	      readingProgress();
 	    }
 	  });
-		// Check if disqus is defined by code injection
-		if (typeof disqus === 'undefined') {
-			// hide comment section
-	    $('.post-comments').css({
-	      'display': 'none'
-	    });
-	  } else {
-	    $('#show-disqus').on('click', function() {
-	      $.ajax({
-	        type: "GET",
-	        url: "//" + disqus + ".disqus.com/embed.js",
-	        dataType: "script",
-	        cache: true
-	      });
-	      $(this).parent().addClass('activated');
-	    });
-	  }
+
   });
 </script>
 
